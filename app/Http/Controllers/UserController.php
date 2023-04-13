@@ -15,7 +15,7 @@ class UserController extends Controller
         ]);
    
         $credentials = $request->only('email', 'password');
-        
+
         if (Auth::attempt($credentials)) {
             return redirect()->intended('dashboard')
                         ->withSuccess('Signed in');
@@ -23,4 +23,9 @@ class UserController extends Controller
   
         return redirect("login")->withSuccess('Login details are not valid');
     }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect('login');
+      }
 }
