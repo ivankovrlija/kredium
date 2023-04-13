@@ -2,16 +2,16 @@
 
 @section('adminContent')
     <div class="admin-content-wrapper">
-        <h1>Report <a href="clients/create">Export Report</a></h1>
+        <h1>Report <button onclick="exportTo('xls');">Export Report</button></h1>
         @if($data)
             <div class="table-wrapper">
-                <table>
+                <table class="export-table">
                     <thead>
                         <tr>
-                        <td>Product type</td>
-                        <td>Product value</td>
-                        <td>Creation date</td>
-                    </tr>
+                            <th>Product type</th>
+                            <th>Product value</th>
+                            <th>Creation date</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach($data as $value)
@@ -36,3 +36,13 @@
         @endif
     </div>
 @stop
+
+
+<script>
+    function exportTo(type) {
+        $('.export-table').tableExport({
+            filename:'report_%DD%-%MM%-%YY%',
+            format: type,
+        });
+    }
+</script>

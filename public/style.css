@@ -199,7 +199,7 @@ body,html {
     color: #123;
 }
 
-.admin-content-wrapper h1 a{
+.admin-content-wrapper h1 a, .admin-content-wrapper h1 button{
     font-weight: 400;
     border: 0;
     transition: background-color .3s ease-out, color .3s ease-out;
@@ -217,7 +217,11 @@ body,html {
     margin-left: 5px;
 }
 
-.admin-content-wrapper h1 a:hover{
+.admin-content-wrapper h1 button{
+    width: 120px;
+}
+
+.admin-content-wrapper h1 a:hover, .admin-content-wrapper h1 button:hover{
     background-color: #6571ff;
 }
 
