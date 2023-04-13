@@ -5,7 +5,8 @@
         @include('sidebar')
         @yield('adminContent')
         <div class="logout-wrapper">
-            <form action="/logout">
+            <form action="/logout" method="POST">
+                @csrf
                 <input type="submit" class="logout-button" value="Logout">
             </form>
         </div>
