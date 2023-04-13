@@ -23,22 +23,60 @@
                 <p class="admin-form-submit-wrapper"><input type="submit" value="Add"></p>
             </form>
             <h2>Cash Loan</h2>
-            <form action="/cash-loan" method="POST">
-                @csrf
-                <p><input type="hidden" name="client_id" value="{{$client->id}}"></p>
-                <p><input type="hidden" name="user_id" value="{{ auth()->user()->id }}"></p>
-                <p><input placeholder="Loan Amount" type="text" name="loan_amount" value="{{$client->loan_amount}}"></p>
-                <p class="admin-form-submit-wrapper"><input type="submit" value="Add"></p>
-            </form>
+            @if($client->cash_loans === null || (auth()->user()->id === $client->cash_loans->user_id && $client->cash_loans != null))
+                <form action="/cash-loan" method="POST">
+                    @csrf
+                    <p><input type="hidden" name="client_id" value="{{$client->id}}"></p>
+                    <p><input type="hidden" name="user_id" value="{{ auth()->user()->id }}"></p>
+                    @if($client->cash_loans != null)
+                    @if(auth()->user()->id === $client->cash_loans->user_id)
+                        <p><input placeholder="Loan Amount" type="text" name="loan_amount" value="{{$client->cash_loans->loan_amount}}"></p>
+                    @else
+                        <p><input placeholder="Loan Amount" type="text" name="loan_amount"></p>
+                    @endif
+
+                    @else
+                        <p><input placeholder="Loan Amount" type="text" name="loan_amount"></p>
+                    @endif
+                    <p class="admin-form-submit-wrapper"><input type="submit" value="Add"></p>
+                </form>
+            @else
+
+            @if(auth()->user()->id != $client->cash_loans->user_id)
+                <p>Loan amount: {{ $client->cash_loans->loan_amount }}</p>
+            @endif
+            
+
+            @endif
             <h2>Home Loan</h2>
-            <form action="/home-loan" method="POST">
-                @csrf
-                <p><input type="hidden" name="client_id" value="{{$client->id}}"></p>
-                <p><input type="hidden" name="user_id" value="{{ auth()->user()->id }}"></p>
-                <p><input placeholder="Property Value" type="text" name="property_value" value="{{$client->property_value}}"></p>
-                <p><input placeholder="Down Payment Amount" type="text" name="down_payment_amount" value="{{$client->down_payment_amount}}"></p>
-                <p class="admin-form-submit-wrapper"><input type="submit" value="Add"></p>
-            </form>
+            @if($client->home_loans === null || (auth()->user()->id === $client->home_loans->user_id && $client->home_loans != null))
+                <form action="/home-loan" method="POST">
+                    @csrf
+                    <p><input type="hidden" name="client_id" value="{{$client->id}}"></p>
+                    <p><input type="hidden" name="user_id" value="{{ auth()->user()->id }}"></p>
+                    @if($client->home_loans != null)
+                    @if(auth()->user()->id === $client->home_loans->user_id)
+                        <p><input placeholder="Property Value" type="text" name="property_value" value="{{$client->home_loans->property_value}}"></p>
+                        <p><input placeholder="Down Payment Amount" type="text" name="down_payment_amount" value="{{$client->home_loans->down_payment_amount}}"></p>
+                    @else
+                        <p><input placeholder="Property Value" type="text" name="property_value"></p>
+                        <p><input placeholder="Down Payment Amount" type="text" name="down_payment_amount"></p>
+                    @endif
+                    
+                    @else
+                        <p><input placeholder="Property Value" type="text" name="property_value"></p>
+                        <p><input placeholder="Down Payment Amount" type="text" name="down_payment_amount"></p>
+                    @endif
+                    <p class="admin-form-submit-wrapper"><input type="submit" value="Add"></p>
+                </form>
+            @else
+
+            @if(auth()->user()->id != $client->home_loans->user_id)
+                <p>Property value: {{ $client->home_loans->property_value }}</p>
+                <p>Down payment amount: {{ $client->home_loans->down_payment_amount }}</p>
+            @endif
+            
+            @endif
         </div>
     </div>
 @stop
