@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('home_loan_product', function (Blueprint $table) {
+        Schema::create('cash_loan_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')
             ->constrained('clients')
@@ -23,8 +23,7 @@ return new class extends Migration
             ->constrained('users')
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->integer('property_value');
-            $table->integer('down_payment_amount');
+            $table->integer('loan_amount')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('home_loan_product');
+        Schema::dropIfExists('cash_loan_products');
     }
 };

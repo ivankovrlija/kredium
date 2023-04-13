@@ -14,7 +14,22 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = Client::all();
+
+        foreach($clients as $client){
+            $client['cash_loan'] = 'no';
+            $client['home_loan'] = 'no';
+
+            if($client->cashLoanProducts()->get()->count() > 0 && $client->cashLoanProducts()->first()->loan_amount != null){
+                $client['cash_loan'] = 'yes';
+            }
+
+            if($client->homeLoanProducts()->get()->count() > 0 && ($client->homeLoanProducts()->first()->property_value != null || $client->homeLoanProducts()->first()->down_payment_amount != null)){
+                $client['home_loan'] = 'yes';
+            }
+        }
+
+        return view('admin.clients')->with('clients', $clients);
     }
 
     /**
@@ -24,7 +39,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.create-clients');
     }
 
     /**
@@ -35,7 +50,18 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required_if:phone,==,null',
+            'phone' => 'required_if:email,==,null',
+        ]);
+
+        if ( Client::create($request->all()) ) {
+            return redirect('/clients');
+        } else {
+            return back()->withErrors();
+        }
     }
 
     /**
@@ -46,7 +72,21 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        $client = Client::find($client->id);
+        // add cash loan data to client object
+        $cashLoans = $client->cashLoanProducts()->first();
+        if($cashLoans){
+            $client['loan_amount'] = $cashLoans->loan_amount;
+        }
+        // add home loan data to client object
+        $homeLoans = $client->homeLoanProducts()->first();
+        if($homeLoans){
+            $client['property_value'] = $homeLoans->property_value;
+            $client['down_payment_amount'] = $homeLoans->down_payment_amount;
+        }
+        
+
+        return view('admin.edit-clients')->with('client', $client);
     }
 
     /**
@@ -69,7 +109,20 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required_if:phone,==,null',
+            'phone' => 'required_if:email,==,null',
+        ]);
+
+        $client = Client::find($client->id);         
+
+        if ( $client->update($request->all()) ) {
+            return redirect('/clients');
+        } else {
+            return back()->withErrors();
+        }
     }
 
     /**
