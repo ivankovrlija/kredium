@@ -73,19 +73,13 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         $client = Client::find($client->id);
-        // add cash loan data to client object
-        $cashLoans = $client->cashLoanProducts()->first();
-        if($cashLoans){
-            $client['loan_amount'] = $cashLoans->loan_amount;
-        }
-        // add home loan data to client object
-        $homeLoans = $client->homeLoanProducts()->first();
-        if($homeLoans){
-            $client['property_value'] = $homeLoans->property_value;
-            $client['down_payment_amount'] = $homeLoans->down_payment_amount;
-        }
-        
 
+        // add cash loan data to client object
+        $client['cash_loans'] = $client->cashLoanProducts()->first();
+
+        // add home loan data to client object
+        $client['home_loans'] = $client->homeLoanProducts()->first();
+        
         return view('admin.edit-clients')->with('client', $client);
     }
 

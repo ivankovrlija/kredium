@@ -27,14 +27,26 @@ return new class extends Migration
 
         DB::table('users')->insert(
             [
-                'first_name' => 'Ivan',
-                'last_name' => 'Kovrlija',
-                'email'      => 'ivan@gmail.com',
-                'email_verified_at' => now(),
-                'password'   => bcrypt('Ivan123!'),
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now()
+                [
+                    'first_name' => 'Ivan',
+                    'last_name' => 'Kovrlija',
+                    'email'      => 'ivan@gmail.com',
+                    'email_verified_at' => now(),
+                    'password'   => bcrypt('Ivan123!'),
+                    'remember_token' => Str::random(10),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ],
+                [
+                    'first_name' => 'Petar',
+                    'last_name' => 'Petrovic',
+                    'email'      => 'petar@gmail.com',
+                    'email_verified_at' => now(),
+                    'password'   => bcrypt('Petar123!'),
+                    'remember_token' => Str::random(10),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
             ]
         );
     }
