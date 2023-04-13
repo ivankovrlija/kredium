@@ -30,7 +30,14 @@
                                 <td>{{ $client->cash_loan }}</td>
                                 <td>{{ $client->home_loan }}</td>
                                 <td><a href="/clients/{{$client->id}}"><img src="/assets/edit.png" alt="edit Icon" class="edit-logo"></a></td>
-                                <td><a href=""><img src="/assets/delete.png" alt="delete Icon" class="delete-logo"></a></td>
+                                <td>
+                                    <form action="/clients/{{$client->id}}" method="POST">
+                                        {{ method_field('DELETE') }}
+                                        @csrf
+                                        <input type="image" src="/assets/delete.png"></input>
+                                    </form>
+                                    <a href=""></a>
+                                </td>
                             </tr>
                         @endforeach 
                     </tbody>

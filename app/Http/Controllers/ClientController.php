@@ -133,6 +133,14 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client = Client::find($client->id);
+
+        if(!$client) {
+            return back()->withErrors('No client found');
+        }
+
+        $client->delete();
+
+        return redirect('/clients');
     }
 }
