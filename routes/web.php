@@ -32,3 +32,5 @@ Route::get('/login', function () {
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware('auth');
+
+Route::get('/reports', 'App\Http\Controllers\ReportController@generateReport')->middleware('auth');
