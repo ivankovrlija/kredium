@@ -75,12 +75,10 @@ class ClientController extends Controller
         $client = Client::find($client->id);
 
         // add cash loan data to client object
-        $cashLoans = $client->cashLoanProducts()->first();
-        $client['cash_loans'] = $cashLoans;
-        
+        $client['cash_loans'] = $client->cashLoanProducts()->first();
+
         // add home loan data to client object
-        $homeLoans = $client->homeLoanProducts()->first();
-        $client['home_loans'] = $homeLoans;
+        $client['home_loans'] = $client->homeLoanProducts()->first();
         
         return view('admin.edit-clients')->with('client', $client);
     }
