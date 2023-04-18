@@ -16,19 +16,6 @@ class ClientController extends Controller
     {
         $clients = Client::all();
 
-        foreach($clients as $client){
-            $client['cash_loan'] = 'no';
-            $client['home_loan'] = 'no';
-
-            if($client->cashLoanProducts()->get()->count() > 0 && $client->cashLoanProducts()->first()->loan_amount != null){
-                $client['cash_loan'] = 'yes';
-            }
-
-            if($client->homeLoanProducts()->get()->count() > 0 && ($client->homeLoanProducts()->first()->property_value != null || $client->homeLoanProducts()->first()->down_payment_amount != null)){
-                $client['home_loan'] = 'yes';
-            }
-        }
-
         return view('admin.clients')->with('clients', $clients);
     }
 

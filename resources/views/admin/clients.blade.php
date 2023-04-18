@@ -27,8 +27,18 @@
                                 <td>{{ $client->last_name }}</td>
                                 <td>{{ $client->email }}</td>
                                 <td>{{ $client->phone }}</td>
-                                <td>{{ $client->cash_loan }}</td>
-                                <td>{{ $client->home_loan }}</td>
+
+                                @if($client->cashLoanProducts)
+                                    <td>Yes</td>
+                                @else
+                                    <td>No</td>
+                                @endif
+
+                                @if($client->homeLoanProducts)
+                                    <td>Yes</td>
+                                @else
+                                    <td>No</td>
+                                @endif
                                 <td><a href="/clients/{{$client->id}}"><img src="/assets/edit.png" alt="edit Icon" class="edit-logo"></a></td>
                                 <td>
                                     <form action="/clients/{{$client->id}}" method="POST">
